@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import CategoryNavBar from "../components/Categorynavbar";
+import CategoryNavBar from "../components/CategoryNavBar";
 import { useAppContext } from "./AppContext";
 
 function Header() {
