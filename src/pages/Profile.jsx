@@ -14,171 +14,70 @@ export default function Profile() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f9fafb" }}>
-      <div
-        style={{
-          background: "#fff",
-          borderBottom: "1px solid #f3f4f6",
-          padding: "14px 24px",
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-        }}
-      >
+    <div className="min-h-screen bg-slate-100">
+      <div className="bg-white border border-b-2 border-gray-200 flex py-3 px-6 text-center gap-3">
         <button
+          className="border-none bg-none cursor-pointer text-xl text-gray-200"
           onClick={() => navigate("/")}
-          style={{
-            border: "none",
-            background: "none",
-            cursor: "pointer",
-            fontSize: 20,
-            color: "#9ca3af",
-          }}
         >
           ←
         </button>
-        <h1 style={{ fontWeight: 800, fontSize: 17 }}>Tài khoản của tôi</h1>
+        <h1 className="text-xl font-extrabold">Your account</h1>
       </div>
-      <div
-        style={{
-          maxWidth: 600,
-          margin: "0 auto",
-          padding: "24px 16px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 14,
-        }}
-      >
+      <div className="max-w-[600px] mx-auto py-6 px-4 flex flex-col gap-4">
         {/* Profile card */}
-        <div
-          style={{
-            borderRadius: 24,
-            padding: "24px 28px",
-            background: "linear-gradient(135deg,#f43f5e,#a855f7)",
-            color: "#fff",
-            display: "flex",
-            alignItems: "center",
-            gap: 18,
-          }}
-        >
-          <div
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: 20,
-              background: "rgba(255,255,255,.25)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 900,
-              fontSize: 26,
-            }}
-          >
+        <div className="rounded-3xl py-6 px-7 text-white flex text-center gap-[18px] bg-custom-gradient">
+          <div className="w-16 h-16 rounded-[20px] bg-[rgba(255,255,255,.25)] flex items-center justify-center font-black text-3xl">
             {(user?.name || "K")[0]}
           </div>
           <div>
             <h2 style={{ fontSize: 20, fontWeight: 900 }}>
-              {user?.name || "Khách hàng"}
+              {user?.name || "Customer"}
             </h2>
             <p style={{ opacity: 0.75, fontSize: 13 }}>{user?.email}</p>
-            <span
-              style={{
-                background: "rgba(255,255,255,.25)",
-                fontSize: 11,
-                padding: "3px 10px",
-                borderRadius: 20,
-                fontWeight: 700,
-                display: "inline-block",
-                marginTop: 6,
-              }}
-            >
-              Thành viên VIP
+            <span className="bg-[rgba(255,255,255,.25)] text-xs py-[3px] px-[10px] rounded-2xl font-bold inline-block mt-2 ">
+              VIP Member
             </span>
           </div>
         </div>
 
         {/* Stats */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3,1fr)",
-            gap: 12,
-          }}
-        >
+        <div className="grid grid-cols-3 gap-3">
           {[
-            ["Đơn hàng", 3],
-            ["Yêu thích", 5],
-            ["Điểm thưởng", "1.250"],
+            ["Orders", 3],
+            ["Favorites", 5],
+            ["Reward points", "1.250"],
           ].map(([l, v]) => (
             <div
+              className="bg-white rounded-2xl py-4 text-center shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
               key={l}
-              style={{
-                background: "#fff",
-                borderRadius: 18,
-                padding: "16px 0",
-                textAlign: "center",
-                boxShadow: "0 1px 8px rgba(0,0,0,.06)",
-              }}
             >
-              <p style={{ fontSize: 22, fontWeight: 900, color: "#111827" }}>
-                {v}
-              </p>
-              <p style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>
-                {l}
-              </p>
+              <p className="text-[22px] font-black text-blue-950">{v}</p>
+              <p className="text-xs text-gray-400 mt-2">{l}</p>
             </div>
           ))}
         </div>
 
         {/* Recent orders */}
-        <div
-          style={{
-            background: "#fff",
-            borderRadius: 20,
-            padding: 22,
-            boxShadow: "0 1px 8px rgba(0,0,0,.06)",
-          }}
-        >
-          <h3 style={{ fontWeight: 800, marginBottom: 14 }}>
-            Đơn hàng gần đây
-          </h3>
+        <div className="bg-white rounded-2xl p-5 shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
+          <h3 className="font-extrabold mb-3">Recently Orders</h3>
           {orders.map((o) => (
             <div
+              className="grid grid-cols-[1fr_1fr_auto] items-center gap-4 py-3 border-b-2 border-slate-100"
               key={o.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "12px 0",
-                borderBottom: "1px solid #f9fafb",
-              }}
             >
-              <div>
-                <p
-                  style={{
-                    fontWeight: 700,
-                    fontSize: 14,
-                    fontFamily: "monospace",
-                  }}
-                >
-                  {o.id}
-                </p>
-                <p style={{ fontSize: 11, color: "#9ca3af" }}>
-                  {o.date} · {o.items} sản phẩm
+              <div className="min-w-0">
+                <p className="font-bold text-xs font-mono">{o.id}</p>
+                <p className="text-xs text-gray-500">
+                  {o.date} · {o.items} items
                 </p>
               </div>
               <span
-                style={{
-                  padding: "3px 10px",
-                  borderRadius: 20,
-                  fontSize: 11,
-                  fontWeight: 600,
-                }}
-                className={STATUS[o.status].cls}
+                className={`py-1 px-3 rounded-2xl text-xs w-36 font-semibold ${STATUS[o.status].cls}`}
               >
                 {STATUS[o.status].label}
               </span>
-              <p style={{ fontWeight: 800, color: "#f43f5e" }}>
+              <p className="font-extrabold text-red-500 w-28 text-right">
                 {fmt(o.total)}
               </p>
             </div>
@@ -186,20 +85,10 @@ export default function Profile() {
         </div>
 
         <button
+          className="w-full border-2 border-red-300 bg-white text-red-500 rounded-2xl py-4 font-extrabold cursor-pointer"
           onClick={handleLogout}
-          style={{
-            width: "100%",
-            border: "2px solid #fecaca",
-            background: "#fff",
-            color: "#ef4444",
-            borderRadius: 18,
-            padding: "14px 0",
-            fontWeight: 800,
-            fontSize: 15,
-            cursor: "pointer",
-          }}
         >
-          Đăng xuất
+          Log out
         </button>
       </div>
     </div>

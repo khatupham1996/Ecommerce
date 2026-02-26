@@ -28,10 +28,10 @@ export default function Home() {
   if (catFilter) filtered = filtered.filter((p) => p.category_id === catFilter);
   if (search)
     filtered = filtered.filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase())
+      p.name.toLowerCase().includes(search.toLowerCase()),
     );
   filtered = filtered.filter(
-    (p) => p.price >= priceRange[0] && p.price <= priceRange[1]
+    (p) => p.price >= priceRange[0] && p.price <= priceRange[1],
   );
   if (sortBy === "price_asc") filtered.sort((a, b) => a.price - b.price);
   else if (sortBy === "price_desc") filtered.sort((a, b) => b.price - a.price);
@@ -40,13 +40,11 @@ export default function Home() {
   return (
     <>
       {/* Hero Banner – only on unfiltered home */}
-      {!catFilter && !search && (
-        <HeroBanner onViewProduct={setViewProduct} />
-      )}
+      {!catFilter && !search && <HeroBanner onViewProduct={setViewProduct} />}
 
       {/* Main content */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "28px 20px" }}>
-        <div style={{ display: "flex", gap: 24 }}>
+      <div className="max-w-7xl mx-auto py-7 px-5">
+        <div className="flex gap-6">
           <FilterSidebar
             sortBy={sortBy}
             setSortBy={setSortBy}
@@ -55,38 +53,19 @@ export default function Home() {
           />
 
           {/* Product Grid */}
-          <div style={{ flex: 1 }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: 18,
-              }}
-            >
-              <p style={{ fontSize: 13, color: "#9ca3af", fontWeight: 600 }}>
+          <div className="flex-1">
+            <div className="flex justify-between text-center mb-5">
+              <p className="text-[13px] text-gray-400 font-semibold">
                 {filtered.length} Items
               </p>
             </div>
             {filtered.length === 0 ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  paddingTop: 80,
-                  color: "#9ca3af",
-                }}
-              >
-                <div style={{ fontSize: 52, marginBottom: 12 }}>🔍</div>
-                <p style={{ fontWeight: 600 }}>Couldn't Find this Item</p>
+              <div className="text-center pt-20 text-gray-400">
+                <div className="text-[52px] mb-[12px]">🔍</div>
+                <p className="font-semibold">Couldn't Find this Item</p>
               </div>
             ) : (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill,minmax(210px,1fr))",
-                  gap: 18,
-                }}
-              >
+              <div className="grid grid-cols-auto-fill-210 gap-4">
                 {filtered.map((p) => (
                   <ProductCard
                     key={p.id}

@@ -18,11 +18,11 @@ function Header() {
       <div className="border-b-2 border-gray-200">
         <div className="max-w-7xl mx-auto py-0 px-5 flex items-center gap-4 h-16">
           <h1
-            className="text-xl font-black text-black flex-shrink-0"
+            className="text-xl font-black text-black flex-shrink-0 cursor-pointer p-4"
             onClick={() => {
               setCatFilter(null);
               setSearch("");
-              navigate("/");
+              navigate("/Home");
             }}
           >
             🇺🇸
@@ -50,10 +50,10 @@ function Header() {
               </button>
             ) : (
               <button
-                className="flex text-center gap-2 border-none bg-slate-200 cursor-pointer text-[13px] font-bold text-gray-500 py-2 px-4 rounded-xl"
+                className="flex items-center justify-center gap-2 border-none cursor-pointer text-[13px] font-bold text-gray-500 py-2 px-4 rounded-xl"
                 onClick={() => navigate("/profile")}
               >
-                <div className="w-7 h-7 rounded-lg bg-[linear-gradient(135deg,#f43f5e,#a855f7)] flex text-center justify-center text-white text-xs font-black">
+                <div className="w-7 h-7 rounded-lg bg-[linear-gradient(135deg,#f43f5e,#a855f7)] flex items-center justify-center text-white text-xs font-black">
                   {(user.name || "U")[0]}
                 </div>
                 {user.name?.split(" ").pop()}
@@ -66,7 +66,7 @@ function Header() {
               Admin
             </button>
             <button
-              className="relative bg-red-500 text-white border-none rounded-2xl py-[10px] px-[18px] text-xs font-extrabold cursor-pointer flex text-center gap-2 "
+              className="relative bg-red-500 text-white border-none rounded-2xl py-[10px] px-[18px] text-xs font-extrabold cursor-pointer flex items-center gap-2 "
               onClick={() => setShowCart(true)}
             >
               🛒 Cart
