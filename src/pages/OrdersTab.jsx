@@ -1,13 +1,5 @@
-import { STATUS } from "../data/constants.js";
+import { ORDER_TABLE_HEADERS, STATUS, STATUS_BG } from "../data/constants.js";
 import { fmt } from "../utils/helpers.js";
-
-const STATUS_BG = {
-  pending: "bg-yellow-100 text-yellow-700",
-  processing: "bg-blue-100 text-blue-700",
-  shipped: "bg-purple-100 text-purple-700",
-  completed: "bg-green-100 text-green-700",
-  cancelled: "bg-red-100 text-red-700",
-};
 
 export default function OrdersTab({ orders, setOrders }) {
   return (
@@ -15,15 +7,7 @@ export default function OrdersTab({ orders, setOrders }) {
       <table className="w-full border-collapse text-[13px]">
         <thead>
           <tr className="bg-gray-50 border-b border-gray-100">
-            {[
-              "Order Number",
-              "Customers",
-              "Items",
-              "Total",
-              "Date",
-              "Status",
-              "Update Status",
-            ].map((h) => (
+            {ORDER_TABLE_HEADERS.map((h) => (
               <th
                 key={h}
                 className="py-3.5 px-4 text-left text-[11px] font-bold text-gray-500 uppercase tracking-wide"

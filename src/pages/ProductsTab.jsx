@@ -88,8 +88,8 @@ export default function ProductsTab({ products, setProducts }) {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
-        <table className="w-full border-collapse text-[13px]">
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm overflow-x-auto">
+        <table className="w-full border-collapse text-[13px] min-w-[700px]">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-100">
               {["Items", "Category", "Price", "Stocks", "Rating", "Delete"].map(

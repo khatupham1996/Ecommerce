@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PRODUCTS, ORDERS_MOCK } from "../data/constants.js";
+// import { useNavigate } from "react-router-dom";
+import { PRODUCTS, ORDERS_MOCK, NAV } from "../data/constants.js";
 import { fmt } from "../utils/helpers.js";
 import AdminSidebar from "./AdminSidebar.jsx";
 import DashboardTab from "./DashboardTab.jsx";
@@ -30,17 +30,9 @@ export default function Admin() {
     },
     { label: "Customers", value: 156, icon: "👥", bg: "bg-amber-100" },
   ];
-  const NAV = [
-    ["dashboard", "📊", "Dashboard"],
-    ["products", "🏷️", "Products"],
-    ["orders", "📦", "Orders"],
-    ["customers", "👥", "Customers"],
-    ["coupons", "🎫", "Coupons"],
-    ["reports", "📈", "Reports"],
-  ];
 
   return (
-    <div className="flex h-screen font-[system-ui,sans-serif] bg-gray-50">
+    <div className="flex min-h-screen font-[system-ui,sans-serif] bg-gray-50">
       {/* ─── Sidebar ─── */}
       <AdminSidebar tab={tab} setTab={setTab} />
 

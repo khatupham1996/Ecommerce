@@ -15,13 +15,13 @@ export default function DashboardTab({ stats, orders, products }) {
   const months = ["Th8", "Th9", "Th10", "Th11", "Th12", "Th1"];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className=" flex flex-col gap-6">
       {/* Stats cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid sm:text-center md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s) => (
           <div key={s.label} className="bg-white rounded-2xl p-5 shadow-sm">
             <div
-              className={`w-11 h-11 ${s.bg} rounded-[14px] flex items-center justify-center text-xl mb-3.5`}
+              className={`w-11 h-11 ${s.bg} mx-auto rounded-[14px] flex items-center justify-center text-xl mb-3.5`}
             >
               {s.icon}
             </div>
@@ -33,7 +33,9 @@ export default function DashboardTab({ stats, orders, products }) {
 
       {/* Revenue chart */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
-        <h3 className="font-extrabold mb-5">Revenue 6 months</h3>
+        <h3 className="font-extrabold mb-5 sm:text-center md:text-left">
+          Revenue 6 months
+        </h3>
         <div className="flex items-end gap-3 h-40">
           {revenue6.map((h, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-2">
@@ -50,24 +52,26 @@ export default function DashboardTab({ stats, orders, products }) {
       </div>
 
       {/* Recent orders + Trending */}
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid sm:text-center md:text-left lg:grid-cols-2 gap-5">
         <div className="bg-white rounded-2xl p-5 shadow-sm">
-          <h3 className="font-extrabold mb-4">Recently Orders</h3>
+          <h3 className="font-extrabold mb-3">Recently Orders</h3>
           {orders.slice(0, 4).map((o) => (
             <div
               key={o.id}
-              className="flex items-center justify-between py-2.5 border-b border-gray-50"
+              className="grid  md:grid-cols-[1fr_1fr_auto] items-center gap-4 py-2.5 border-b border-gray-50"
             >
-              <div>
-                <p className="text-[13px] font-bold font-mono">{o.id}</p>
-                <p className="text-[11px] text-gray-400">{o.user}</p>
+              <div className="min-w-0">
+                <p className="text-xs font-bold font-mono">{o.id}</p>
+                <p className="text-xs text-gray-400">{o.user}</p>
               </div>
               <span
-                className={`py-0.5 px-2.5 rounded-full text-[11px] font-semibold ${STATUS_BG[o.status]}`}
+                className={`py-0.5 px-2.5 rounded-full w-36 mx-auto md:mx-0 text-xs font-semibold ${STATUS_BG[o.status]}`}
               >
                 {STATUS[o.status].label}
               </span>
-              <p className="text-[13px] font-bold">{fmt(o.total)}</p>
+              <p className="text-xs font-bold w-28 mx-auto md:mx-0 md:text-right">
+                {fmt(o.total)}
+              </p>
             </div>
           ))}
         </div>
@@ -88,7 +92,9 @@ export default function DashboardTab({ stats, orders, products }) {
                   className="w-9 h-9 rounded-[10px] object-cover"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold line-clamp-1">{p.name}</p>
+                  <p className="text-xs sm:text-left font-semibold line-clamp-1">
+                    {p.name}
+                  </p>
                   <Stars r={Math.floor(p.rating)} />
                 </div>
                 <p className="text-[13px] font-extrabold text-rose-500">

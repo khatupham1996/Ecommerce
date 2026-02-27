@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../ui/AppContext.jsx";
 import { COUPONS_MOCK } from "../data/constants.js";
 import { fmt } from "../utils/helpers.js";
+import { useProvinces } from "../hooks/useProvinces.js";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ export default function Checkout() {
   const [err, setErr] = useState("");
   const [done, setDone] = useState(false);
   const [orderId] = useState(`ORD-${Math.floor(Math.random() * 9000 + 1000)}`);
+  const { provinces, districts, wards, loading, fetchDistricts, fetchWards } =
+    useProvinces();
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
   const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
@@ -33,7 +36,7 @@ export default function Checkout() {
 
   const applyCoupon = () => {
     const c = COUPONS_MOCK.find(
-      (c) => c.code === form.coupon.toUpperCase() && c.is_active
+      (c) => c.code === form.coupon.toUpperCase() && c.is_active,
     );
     if (!c) {
       setErr("Mã không hợp lệ");
@@ -44,98 +47,32 @@ export default function Checkout() {
     }
   };
 
-  // ─── Order Success ────────────────────────────────────────────────────
+  //Order Success
   if (done)
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "#f9fafb",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 24,
-        }}
-      >
-        <div
-          style={{
-            background: "#fff",
-            borderRadius: 28,
-            padding: 48,
-            textAlign: "center",
-            maxWidth: 420,
-            width: "100%",
-            boxShadow: "0 20px 60px rgba(0,0,0,.1)",
-          }}
-        >
-          <div
-            style={{
-              width: 80,
-              height: 80,
-              background: "#d1fae5",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 40,
-              margin: "0 auto 20px",
-            }}
-          >
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="bg-white rounded-3xl p-12 text-center max-w-[420px] w-full shadow-[0 20px 60px rgba(0,0,0,.1)]">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-5">
             ✅
           </div>
-          <h2
-            style={{
-              fontSize: 24,
-              fontWeight: 900,
-              color: "#111827",
-              marginBottom: 8,
-            }}
-          >
-            Đặt hàng thành công!
+          <h2 className="text-2xl font-black text-sky-950 mb-2">
+            Order Completed!
           </h2>
-          <p style={{ color: "#6b7280", marginBottom: 4 }}>Mã đơn hàng</p>
-          <p
-            style={{
-              fontSize: 22,
-              fontWeight: 900,
-              color: "#f43f5e",
-              fontFamily: "monospace",
-              marginBottom: 16,
-            }}
-          >
+          <p className="text-gray-500 mb-1">Order Numbers</p>
+          <p className="text-2xl font-black text-red-500 font-mono mb-4">
             {orderId}
           </p>
-          <div
-            style={{
-              background: "#fffbeb",
-              border: "1px solid #fde68a",
-              borderRadius: 16,
-              padding: "12px 16px",
-              fontSize: 13,
-              color: "#92400e",
-              marginBottom: 24,
-            }}
-          >
-            🚢 Giao từ Mỹ về VN trong <b>7–14 ngày làm việc</b>
+          <div className="bg-yellow-50 border border-yellow-100 py-3 px-4 rounded-2xl text-xs text-orange-800 mb-6">
+            🚢 Deliver from US to VietNam within <b>7–14 business days</b>
           </div>
           <button
             onClick={() => {
               setCart([]);
               navigate("/");
             }}
-            style={{
-              width: "100%",
-              background: "#f43f5e",
-              color: "#fff",
-              border: "none",
-              borderRadius: 18,
-              padding: "14px 0",
-              fontWeight: 800,
-              fontSize: 15,
-              cursor: "pointer",
-            }}
+            className="w-full bg-red-500 text-white border-none rounded-2xl py-4 px-0 font-extrabold text-[15px] cursor-pointer"
           >
-            Tiếp tục mua sắm
+            Continue Shopping
           </button>
         </div>
       </div>
@@ -143,163 +80,121 @@ export default function Checkout() {
 
   // ─── Checkout Form ────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: "100vh", background: "#f9fafb" }}>
-      <div
-        style={{
-          background: "#fff",
-          borderBottom: "1px solid #f3f4f6",
-          padding: "14px 24px",
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-        }}
-      >
+    <div className="min-h-screen bg-slate-50">
+      <div className="bg-white border-b border-solid border-gray-50 py-4 px-6 flex items-center gap-4 sticky t-0 z-10">
         <button
           onClick={() => navigate("/")}
-          style={{
-            border: "none",
-            background: "none",
-            cursor: "pointer",
-            fontSize: 20,
-            color: "#9ca3af",
-          }}
+          className="border-none bg-none cursor-pointer text-xl text-gray-400"
         >
           ←
         </button>
-        <h1 style={{ fontSize: 18, fontWeight: 800, color: "#111827" }}>
-          Check Out
-        </h1>
+        <h1 className="text-xl font-extrabold text-slate-900">Check Out</h1>
       </div>
-      <div
-        style={{
-          maxWidth: 900,
-          margin: "0 auto",
-          padding: "28px 16px",
-          display: "grid",
-          gridTemplateColumns: "1fr 340px",
-          gap: 24,
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div className="max-w-4xl mx-auto py-7 px-4 grid grid-cols-[1fr_340px] gap-6">
+        <div className="flex flex-col gap-5">
           {/* Shipping */}
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 20,
-              padding: 24,
-              boxShadow: "0 1px 8px rgba(0,0,0,.06)",
-            }}
-          >
-            <h3 style={{ fontWeight: 800, marginBottom: 20 }}>
-              📦 Shipping Address
-            </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 14,
-              }}
-            >
+          <div className="bg-white rounded-[20px] p-6 shadow-[0 1px 8px rgba(0,0,0,.06)]">
+            <h3 className="font-extrabold mb-5">📦 Shipping Address</h3>
+            <div className="grid grid-cols-[1fr_1fr] gap-4">
               {[
                 ["name", "Name", "Kha Tu Pham"],
                 ["phone", "Phone Number", "0901234567"],
               ].map(([k, l, p]) => (
                 <div key={k}>
-                  <label
-                    style={{
-                      fontSize: 13,
-                      color: "#6b7280",
-                      fontWeight: 600,
-                      display: "block",
-                      marginBottom: 6,
-                    }}
-                  >
+                  <label className="text-xs text-gray-500 font-semibold block mb-[6px]">
                     {l}
                   </label>
                   <input
                     value={form[k]}
                     onChange={set(k)}
                     placeholder={p}
-                    style={{
-                      width: "100%",
-                      border: "1.5px solid #e5e7eb",
-                      borderRadius: 12,
-                      padding: "11px 14px",
-                      fontSize: 13,
-                      outline: "none",
-                      boxSizing: "border-box",
-                    }}
+                    className="w-full border border-solid border-gray-300 rounded-xl py-3 px-4 text-xs outline-none box-border"
                   />
                 </div>
               ))}
-              <div style={{ gridColumn: "1/-1" }}>
-                <label
-                  style={{
-                    fontSize: 13,
-                    color: "#6b7280",
-                    fontWeight: 600,
-                    display: "block",
-                    marginBottom: 6,
-                  }}
-                >
+              <div
+                // gridColumn: "1/-1"-> grid col-span-full
+                className="grid col-span-full"
+              >
+                <label className="text-xs text-gray-500 font-semibold block mb-2">
                   Address
                 </label>
                 <input
+                  className="w-full border border-solid border-gray-300 rounded-xl py-3 px-4 text-xs outline-none box-border"
                   value={form.address}
                   onChange={set("address")}
                   placeholder="430 Phạm Văn Đồng, Nghĩa Hành, Quảng Ngãi"
-                  style={{
-                    width: "100%",
-                    border: "1.5px solid #e5e7eb",
-                    borderRadius: 12,
-                    padding: "11px 14px",
-                    fontSize: 13,
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
                 />
               </div>
-              <div style={{ gridColumn: "1/-1" }}>
-                <label
-                  style={{
-                    fontSize: 13,
-                    color: "#6b7280",
-                    fontWeight: 600,
-                    display: "block",
-                    marginBottom: 6,
-                  }}
-                >
-                  Province
-                </label>
-                <select
-                  value={form.city}
-                  onChange={set("city")}
-                  style={{
-                    width: "100%",
-                    border: "1.5px solid #e5e7eb",
-                    borderRadius: 12,
-                    padding: "11px 14px",
-                    fontSize: 13,
-                    outline: "none",
-                    background: "#fff",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  <option value="">-- Choose --</option>
-                  {[
-                    "Hà Nội",
-                    "TP. Hồ Chí Minh",
-                    "Đà Nẵng",
-                    "Cần Thơ",
-                    "Hải Phòng",
-                    "Nha Trang",
-                  ].map((c) => (
-                    <option key={c}>{c}</option>
-                  ))}
-                </select>
+
+              <div className="col-span-full grid grid-cols-3 gap-4">
+                {/* Province */}
+                <div>
+                  <label className="text-xs text-gray-500 font-semibold block mb-2">
+                    Province
+                  </label>
+                  <select
+                    value={form.province}
+                    onChange={(e) => {
+                      set("province")(e);
+                      set("district")({ target: { value: "" } });
+                      set("ward")({ target: { value: "" } });
+                      fetchDistricts(e.target.value);
+                    }}
+                    className="w-full border border-solid border-gray-300 rounded-xl py-3 px-4 text-xs outline-none box-border"
+                  >
+                    <option value="">-- Province --</option>
+                    {provinces.map((p) => (
+                      <option key={p.code} value={p.code}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* District */}
+                <div>
+                  <label className="text-xs text-gray-500 font-semibold block mb-2">
+                    District
+                  </label>
+                  <select
+                    value={form.district}
+                    onChange={(e) => {
+                      set("district")(e);
+                      set("ward")({ target: { value: "" } });
+                      fetchWards(e.target.value);
+                    }}
+                    disabled={!districts.length}
+                    className="w-full border border-solid border-gray-300 rounded-xl py-3 px-4 text-xs outline-none box-border disabled:bg-gray-100"
+                  >
+                    <option value="">-- District --</option>
+                    {districts.map((d) => (
+                      <option key={d.code} value={d.code}>
+                        {d.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Ward */}
+                <div>
+                  <label className="text-xs text-gray-500 font-semibold block mb-2">
+                    Ward
+                  </label>
+                  <select
+                    value={form.ward}
+                    onChange={set("ward")}
+                    disabled={!wards.length}
+                    className="w-full border border-solid border-gray-300 rounded-xl py-3 px-4 text-xs outline-none box-border disabled:bg-gray-100"
+                  >
+                    <option value="">-- Ward --</option>
+                    {wards.map((w) => (
+                      <option key={w.code} value={w.code}>
+                        {w.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>

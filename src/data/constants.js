@@ -252,7 +252,14 @@ export const COUPONS_MOCK = [
     is_active: false,
   },
 ];
-
+export const MEDIA = [
+  ["🔵", "Google"],
+  ["🟦", "Facebook"],
+];
+export const ACCESS = [
+  ["login", "Login"],
+  ["register", "Register"],
+];
 // ─── Order Status Config ──────────────────────────────────────────────────────
 export const STATUS = {
   pending: {
@@ -264,7 +271,14 @@ export const STATUS = {
   completed: { label: "Completed", cls: "bg-green-100 text-green-700" },
   cancelled: { label: "Cancelled", cls: "bg-red-100 text-red-700" },
 };
-
+export const NAV = [
+  ["dashboard", "📊", "Dashboard"],
+  ["products", "🏷️", "Products"],
+  ["orders", "📦", "Orders"],
+  ["customers", "👥", "Customers"],
+  ["coupons", "🎫", "Coupons"],
+  ["reports", "📈", "Reports"],
+];
 // ─── Badge Colors ─────────────────────────────────────────────────────────────
 export const BADGE_CLS = {
   "Best Seller": "#ef4444",
@@ -277,6 +291,22 @@ export const BADGE_CLS = {
   Trending: "#ec4899",
 };
 
+export const STATUS_BG = {
+  pending: "bg-yellow-100 text-yellow-700",
+  processing: "bg-blue-100 text-blue-700",
+  shipped: "bg-purple-100 text-purple-700",
+  completed: "bg-green-100 text-green-700",
+  cancelled: "bg-red-100 text-red-700",
+};
+export const ORDER_TABLE_HEADERS = [
+  "Order Number",
+  "Customers",
+  "Items",
+  "Total",
+  "Date",
+  "Status",
+  "Update Status",
+];
 // ─── Mega Dropdown Data ───────────────────────────────────────────────────────
 export const MEGA_MENUS = {
   1: {

@@ -1,12 +1,6 @@
 import { useNavigate } from "react-router-dom";
-const NAV = [
-  ["dashboard", "📊", "Dashboard"],
-  ["products", "🏷️", "Products"],
-  ["orders", "📦", "Orders"],
-  ["customers", "👥", "Customers"],
-  ["coupons", "🎫", "Coupons"],
-  ["reports", "📈", "Reports"],
-];
+import { NAV } from "../data/constants";
+
 function AdminSidebar({ tab, setTab }) {
   const navigate = useNavigate();
   return (
