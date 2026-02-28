@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../ui/AppContext.jsx";
-import { COUPONS_MOCK } from "../data/constants.js";
+import { COUPONS_MOCK, PAYMENTS } from "../data/constants.js";
 import { fmt } from "../utils/helpers.js";
 import { useProvinces } from "../hooks/useProvinces.js";
 
@@ -200,110 +200,44 @@ export default function Checkout() {
           </div>
 
           {/* Payment */}
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 20,
-              padding: 24,
-              boxShadow: "0 1px 8px rgba(0,0,0,.06)",
-            }}
-          >
-            <h3 style={{ fontWeight: 800, marginBottom: 20 }}>
-              💳 Payment Methods
-            </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 10,
-              }}
-            >
-              {[
-                ["stripe", "💳 Stripe / Visa", "International Card"],
-                ["paypal", "🅿️ PayPal", "PayPal Wallet"],
-                ["momo", "🟣 MoMo", "MoMo Wallet"],
-                ["cod", "💵 COD", "Cash"],
-              ].map(([k, l, d]) => (
+          <div className="bg-white rounded-2xl p-6 shadow-[0 1px 8px rgba(0,0,0,.06)]">
+            <h3 className="font-extrabold mb-5">💳 Payment Methods</h3>
+            <div className="grid grid-cols-[1fr_1fr] gap-3">
+              {PAYMENTS.map(([k, l, d]) => (
                 <button
                   key={k}
                   onClick={() => setForm({ ...form, payment: k })}
-                  style={{
-                    border: `2px solid ${
-                      form.payment === k ? "#f43f5e" : "#e5e7eb"
-                    }`,
-                    background: form.payment === k ? "#fff1f2" : "#fff",
-                    borderRadius: 16,
-                    padding: "14px 16px",
-                    textAlign: "left",
-                    cursor: "pointer",
-                    transition: "all .15s",
-                  }}
+                  className={`rounded-2xl py-3 px-4 text-left cursor-pointer transition-all duration-[150] border-2  ${form.payment === k ? "border-red-400" : "border-slate-200"} ${form.payment === k ? "bg-red-50" : "bg-white"}`}
                 >
-                  <p style={{ fontSize: 13, fontWeight: 700 }}>{l}</p>
-                  <p style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }}>
-                    {d}
-                  </p>
+                  <p className="text-xs font-bold">{l}</p>
+                  <p className="text-xs text-slate-400 mt-1">{d}</p>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Coupon */}
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 20,
-              padding: 24,
-              boxShadow: "0 1px 8px rgba(0,0,0,.06)",
-            }}
-          >
-            <h3 style={{ fontWeight: 800, marginBottom: 16 }}>🎫 Coupons</h3>
-            <div style={{ display: "flex", gap: 10 }}>
+          <div className="bg-white rounded-2xl p-6 shadow-[0 1px 8px rgba(0,0,0,.06)]">
+            <h3 className="font-extrabold mb-4">🎫 Coupons</h3>
+            <div className="flex gap-3">
               <input
                 value={form.coupon}
                 onChange={set("coupon")}
                 onKeyDown={(e) => e.key === "Enter" && applyCoupon()}
                 placeholder="WELCOME10"
-                style={{
-                  flex: 1,
-                  border: "1.5px solid #e5e7eb",
-                  borderRadius: 12,
-                  padding: "11px 14px",
-                  fontSize: 13,
-                  outline: "none",
-                }}
+                className="flex-1 border-2 border-solid border-slate-200 rounded-xl py-3 px-4 text-xs outline-none"
               />
               <button
+                className="bg-slate-950 text-white border-none rounded-xl py-0 px-5 font-bold text-xs cursor-pointer"
                 onClick={applyCoupon}
-                style={{
-                  background: "#111827",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 12,
-                  padding: "0 20px",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: "pointer",
-                }}
               >
                 Apply
               </button>
             </div>
-            {err && (
-              <p style={{ color: "#ef4444", fontSize: 12, marginTop: 8 }}>
-                {err}
-              </p>
-            )}
+            {err && <p className="text-red-500 text-xs mt-2">{err}</p>}
             {coupon && (
-              <p
-                style={{
-                  color: "#10b981",
-                  fontSize: 13,
-                  marginTop: 8,
-                  fontWeight: 600,
-                }}
-              >
-                ✅ Giảm{" "}
+              <p className="text-green-500 text-xs mt-2 font-semibold">
+                ✅ Discount{" "}
                 {coupon.discount_type === "percentage"
                   ? `${coupon.discount_value}%`
                   : fmt(coupon.discount_value)}
@@ -313,117 +247,48 @@ export default function Checkout() {
         </div>
 
         {/* Summary */}
-        <div
-          style={{
-            background: "#fff",
-            borderRadius: 20,
-            padding: 22,
-            boxShadow: "0 1px 8px rgba(0,0,0,.06)",
-            alignSelf: "start",
-            position: "sticky",
-            top: 70,
-          }}
-        >
-          <h3 style={{ fontWeight: 800, marginBottom: 16 }}>
-            Items ({cart.length})
-          </h3>
-          <div
-            style={{
-              maxHeight: 220,
-              overflowY: "auto",
-              display: "flex",
-              flexDirection: "column",
-              gap: 10,
-              marginBottom: 16,
-            }}
-          >
+        <div className="bg-white rounded-[20px] p-5 shadow-[0 1px 8px rgba(0,0,0,.06)]  self-start sticky top-[70px]">
+          <h3 className="font-extrabold mb-4">Items ({cart.length})</h3>
+          <div className="max-h-[220px] overflow-y-auto flex flex-col gap-3 mb-4">
             {cart.map((item) => (
-              <div
-                key={item.id}
-                style={{ display: "flex", gap: 10, alignItems: "center" }}
-              >
+              <div key={item.id} className="flex gap-3 items-center">
                 <img
                   src={item.image}
                   alt={item.name}
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 10,
-                    objectFit: "cover",
-                    flexShrink: 0,
-                  }}
+                  className="w-11 h-11 rounded-lg object-cover flex-shrink-0"
                 />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p
-                    style={{
-                      fontSize: 12,
-                      color: "#374151",
-                      fontWeight: 600,
-                      overflow: "hidden",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-slate-700 font-semibold line-clamp-1">
                     {item.name}
                   </p>
-                  <p style={{ fontSize: 11, color: "#9ca3af" }}>x{item.qty}</p>
+                  <p className="text-xs text-neutral-500 ">x{item.qty}</p>
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 700 }}>
+                <p className="text-xs font-bold">
                   {fmt(item.price * item.qty)}
                 </p>
               </div>
             ))}
           </div>
-          <div
-            style={{
-              borderTop: "1px solid #f3f4f6",
-              paddingTop: 14,
-              display: "flex",
-              flexDirection: "column",
-              gap: 8,
-            }}
-          >
+          <div className="border-t pt-4 flex flex-col gap-2">
             {[
               ["Price", fmt(sub)],
               ["Shipping", ship === 0 ? "Free 🎉" : fmt(ship)],
             ].map(([l, v]) => (
               <div
                 key={l}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontSize: 13,
-                  color: "#6b7280",
-                }}
+                className="flex justify-between text-xs text-neutral-500"
               >
                 <span>{l}</span>
                 <span>{v}</span>
               </div>
             ))}
             {discount > 0 && (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontSize: 13,
-                  color: "#10b981",
-                }}
-              >
-                <span>Giảm giá</span>
+              <div className="flex justify-between text-xs text-green-500">
+                <span>Discount</span>
                 <span>−{fmt(discount)}</span>
               </div>
             )}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontWeight: 800,
-                fontSize: 16,
-                paddingTop: 8,
-                borderTop: "1px solid #f3f4f6",
-              }}
-            >
+            <div className="flex justify-between font-extrabold text-[16px] pt-2 border-t border-solid border-gray-200">
               <span>Total</span>
               <span style={{ color: "#f43f5e", fontSize: 18 }}>
                 {fmt(total)}
@@ -432,18 +297,7 @@ export default function Checkout() {
           </div>
           <button
             onClick={() => setDone(true)}
-            style={{
-              width: "100%",
-              marginTop: 18,
-              background: "#f43f5e",
-              color: "#fff",
-              border: "none",
-              borderRadius: 16,
-              padding: "14px 0",
-              fontWeight: 800,
-              fontSize: 14,
-              cursor: "pointer",
-            }}
+            className="w-full mt-4 bg-red-500 text-white border-none py-3 px-0 font-extrabold text-xs cursor-pointer rounded-2xl"
           >
             Order Confirmation →
           </button>

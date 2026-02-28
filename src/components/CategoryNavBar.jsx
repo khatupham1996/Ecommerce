@@ -3,29 +3,164 @@ import { CATEGORIES, MEGA_MENUS } from "../data/constants.js";
 
 export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
   const [openMenu, setOpenMenu] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const handleSelectCategory = (id) => {
+    setCatFilter(id === catFilter ? null : id);
+    setOpenMenu(null);
+    setMobileOpen(false);
+  };
+  const handleSelectAll = () => {
+    setCatFilter(null);
+    setSearch("");
+    setOpenMenu(null);
+    setMobileOpen(false);
+  };
 
   return (
     <div
-      style={{
-        background: "#fff",
-        borderBottom: "1px solid #f0f0f0",
-        position: "relative",
-      }}
+      className=" bg-white border-b border-gray-100 relative"
       onMouseLeave={() => setOpenMenu(null)}
     >
+      {/* Mobile: Hambuger button */}
+      <div className="lg:hidden flex items-center px-4 py-2 gap-3">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="flex items-center gap-2 py-2 px-3 rounded-xl border border-gray-200 bg-white cursor-pointer text-[13px] font-bold text-gray-700"
+        >
+          {mobileOpen ? (
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d="M3 6h18M3 12h18M3 18h18" />
+            </svg>
+          )}
+          Categories
+        </button>
+
+        {/* Show active category pill on mobile */}
+        {catFilter && (
+          <span className="text-xs font-bold text-rose-500 bg-rose-50 py-1 px-2.5 rounded-full">
+            {CATEGORIES.find((c) => c.id === catFilter)?.icon}{" "}
+            {CATEGORIES.find((c) => c.id === catFilter)?.name}
+          </span>
+        )}
+      </div>
+      {/* Mobile: Dropdown menu */}
+      {mobileOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/30 z-40"
+            onClick={() => setMobileOpen(false)}
+          />
+
+          {/* Menu panel */}
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-white z-50 shadow-[0_16px_40px_rgba(0,0,0,.15)] rounded-b-2xl max-h-[70vh] overflow-y-auto">
+            {/* All button */}
+            <button
+              onClick={handleSelectAll}
+              className={`w-full flex items-center gap-3 py-3.5 px-5 border-none cursor-pointer text-[14px] font-bold transition-colors
+                ${!catFilter ? "text-rose-500 bg-rose-50" : "text-gray-700 bg-white hover:bg-gray-50"}`}
+            >
+              🏪 All Products
+            </button>
+
+            <div className="h-px bg-gray-100" />
+
+            {/* Category items */}
+            {CATEGORIES.map((c) => (
+              <div key={c.id}>
+                <button
+                  onClick={() => handleSelectCategory(c.id)}
+                  className={`w-full flex items-center justify-between py-3.5 px-5 border-none cursor-pointer text-[14px] font-bold transition-colors
+                    ${catFilter === c.id ? "text-rose-500 bg-rose-50" : "text-gray-700 bg-white hover:bg-gray-50"}`}
+                >
+                  <span className="flex items-center gap-2.5">
+                    <span className="text-lg">{c.icon}</span>
+                    {c.name}
+                  </span>
+                  {catFilter === c.id && (
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      className="text-rose-500"
+                    >
+                      <path d="M5 12l5 5L20 7" />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Show subcategories if this category is selected and has mega menu */}
+                {catFilter === c.id && MEGA_MENUS[c.id] && (
+                  <div className="bg-gray-50 py-2 px-5">
+                    {MEGA_MENUS[c.id].columns.map((col, ci) => (
+                      <div key={ci} className="mb-2">
+                        <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-1 px-2">
+                          {col.heading}
+                        </p>
+                        {col.items.map((item) => (
+                          <button
+                            key={item}
+                            onClick={() => setMobileOpen(false)}
+                            className="block w-full text-left py-1.5 px-2 text-xs text-gray-500 bg-transparent border-none cursor-pointer rounded-lg hover:bg-white hover:text-rose-500 transition-colors"
+                          >
+                            {item}
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+
+                    {/* Brands */}
+                    <div className="mt-1 mb-1">
+                      <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-1 px-2">
+                        Brands
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 px-2">
+                        {MEGA_MENUS[c.id].featured.map((brand) => (
+                          <span
+                            key={brand}
+                            className="text-[11px] font-semibold bg-white border border-gray-200 rounded-lg py-1 px-2 text-gray-600"
+                          >
+                            {brand}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="h-px bg-gray-50" />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       {/* Nav tab row */}
-      <div
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "0 20px",
-          display: "flex",
-          alignItems: "center",
-          gap: 0,
-          overflowX: "auto",
-          scrollbarWidth: "none",
-        }}
-      >
+      <div className="hidden lg:flex max-w-7xl mx-auto px-5 items-center overflow-x-auto scrollbar-none">
         <button
           onClick={() => {
             setCatFilter(null);
@@ -33,24 +168,8 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
             setOpenMenu(null);
           }}
           onMouseEnter={() => setOpenMenu(null)}
-          style={{
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            padding: "13px 16px",
-            border: "none",
-            cursor: "pointer",
-            fontSize: 13,
-            fontWeight: 700,
-            background: "transparent",
-            color: !catFilter ? "#f43f5e" : "#374151",
-            borderBottom: !catFilter
-              ? "2.5px solid #f43f5e"
-              : "2.5px solid transparent",
-            transition: "color .15s",
-            whiteSpace: "nowrap",
-          }}
+          className={`shrink-0 flex items-center gap-1.5 py-3 px-4 border-none cursor-pointer text-[13px] font-bold bg-transparent whitespace-nowrap transition-colors duration-150
+            ${!catFilter ? "text-rose-500 border-b-[2.5px] border-b-rose-500" : "text-gray-700 border-b-[2.5px] border-b-transparent"}`}
         >
           🏪 All
         </button>
@@ -63,26 +182,10 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
               setOpenMenu(null);
             }}
             onMouseEnter={() => setOpenMenu(MEGA_MENUS[c.id] ? c.id : null)}
-            style={{
-              flexShrink: 0,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              padding: "13px 16px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: 13,
-              fontWeight: 700,
-              background: openMenu === c.id ? "#fff8f8" : "transparent",
-              color:
-                catFilter === c.id || openMenu === c.id ? "#f43f5e" : "#374151",
-              borderBottom:
-                catFilter === c.id
-                  ? "2.5px solid #f43f5e"
-                  : "2.5px solid transparent",
-              transition: "all .15s",
-              whiteSpace: "nowrap",
-            }}
+            className={`shrink-0 flex items-center gap-1.5 py-3 px-4 border-none cursor-pointer text-[13px] font-bold whitespace-nowrap transition-all duration-150
+              ${openMenu === c.id ? "bg-rose-50/50" : "bg-transparent"}
+              ${catFilter === c.id || openMenu === c.id ? "text-rose-500" : "text-gray-700"}
+              ${catFilter === c.id ? "border-b-[2.5px] border-b-rose-500" : "border-b-[2.5px] border-b-transparent"}`}
           >
             {c.icon} {c.name}
             {MEGA_MENUS[c.id] && (
@@ -91,12 +194,7 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
                 height="10"
                 viewBox="0 0 10 10"
                 fill="none"
-                style={{
-                  marginLeft: 1,
-                  transition: "transform .2s",
-                  transform:
-                    openMenu === c.id ? "rotate(180deg)" : "rotate(0deg)",
-                }}
+                className={`ml-0.5 transition-transform duration-200 ${openMenu === c.id ? "rotate-180" : "rotate-0"}`}
               >
                 <path
                   d="M2 3.5L5 6.5L8 3.5"
@@ -112,127 +210,41 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
 
       {/* Mega Dropdown */}
       {openMenu && MEGA_MENUS[openMenu] && (
-        <div
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            background: "#fff",
-            boxShadow: "0 24px 60px rgba(0,0,0,.13)",
-            borderTop: "2px solid #f43f5e",
-            zIndex: 100,
-            borderRadius: "0 0 20px 20px",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1280,
-              margin: "0 auto",
-              padding: "28px 28px 24px",
-              display: "grid",
-              gridTemplateColumns: "190px 1fr 1fr 1fr",
-              gap: 32,
-            }}
-          >
+        <div className="absolute top-full left-0 right-0 bg-white shadow-[0_24px_60px_rgba(0,0,0,.13)] border-t-2 border-t-rose-500 z-[100] rounded-b-[20px] overflow-hidden">
+          <div className="max-w-[1280px] mx-auto pt-7 px-7 pb-6 grid grid-cols-[190px_1fr_1fr_1fr] gap-8">
             {/* Left panel */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <div
-                style={{
-                  background: "linear-gradient(135deg,#f43f5e,#a855f7)",
-                  borderRadius: 16,
-                  padding: "20px 18px",
-                  color: "#fff",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    background: "rgba(255,255,255,.25)",
-                    padding: "3px 8px",
-                    borderRadius: 20,
-                  }}
-                >
+            <div className="flex flex-col gap-3.5">
+              {/* Banner card */}
+              <div className="bg-gradient-to-br from-rose-500 to-purple-500 rounded-2xl py-5 px-[18px] text-white">
+                <span className="text-[10px] font-bold bg-white/25 py-0.5 px-2 rounded-full">
                   {MEGA_MENUS[openMenu].banner.label}
                 </span>
-                <p
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 900,
-                    marginTop: 10,
-                    lineHeight: 1.3,
-                  }}
-                >
+                <p className="text-base font-black mt-2.5 leading-tight">
                   {MEGA_MENUS[openMenu].banner.text}
                 </p>
-                <p style={{ fontSize: 11, marginTop: 6, opacity: 0.8 }}>
-                  US Product 🇺🇸
-                </p>
+                <p className="text-[11px] mt-1.5 opacity-80">US Product 🇺🇸</p>
                 <button
                   onClick={() => {
                     setCatFilter(openMenu);
                     setOpenMenu(null);
                   }}
-                  style={{
-                    marginTop: 14,
-                    background: "rgba(255,255,255,.2)",
-                    border: "1px solid rgba(255,255,255,.4)",
-                    color: "#fff",
-                    borderRadius: 10,
-                    padding: "7px 14px",
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
+                  className="mt-3.5 bg-white/20 border border-white/40 text-white rounded-[10px] py-[7px] px-3.5 text-xs font-bold cursor-pointer hover:bg-white/30 transition-colors"
                 >
                   Explore →
                 </button>
               </div>
 
+              {/* Brands */}
               <div>
-                <p
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: "#9ca3af",
-                    textTransform: "uppercase",
-                    letterSpacing: 2,
-                    marginBottom: 8,
-                  }}
-                >
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[2px] mb-2">
                   Brands
                 </p>
-                <div
-                  style={{ display: "flex", flexDirection: "column", gap: 5 }}
-                >
+                <div className="flex flex-col gap-[5px]">
                   {MEGA_MENUS[openMenu].featured.map((brand) => (
                     <button
                       key={brand}
                       onClick={() => setOpenMenu(null)}
-                      style={{
-                        textAlign: "left",
-                        background: "#f9fafb",
-                        border: "1px solid #f3f4f6",
-                        borderRadius: 10,
-                        padding: "7px 12px",
-                        fontSize: 12,
-                        fontWeight: 700,
-                        color: "#374151",
-                        cursor: "pointer",
-                        transition: "all .15s",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "#fff1f2";
-                        e.currentTarget.style.color = "#f43f5e";
-                        e.currentTarget.style.borderColor = "#fecdd3";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "#f9fafb";
-                        e.currentTarget.style.color = "#374151";
-                        e.currentTarget.style.borderColor = "#f3f4f6";
-                      }}
+                      className="text-left bg-gray-50 border border-gray-100 rounded-[10px] py-[7px] px-3 text-xs font-bold text-gray-700 cursor-pointer transition-all duration-150 hover:bg-rose-50 hover:text-rose-500 hover:border-rose-200"
                     >
                       {brand}
                     </button>
@@ -244,23 +256,10 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
             {/* Sub-category columns */}
             {MEGA_MENUS[openMenu].columns.map((col, ci) => (
               <div key={ci}>
-                <p
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 800,
-                    color: "#111827",
-                    marginBottom: 10,
-                    paddingBottom: 8,
-                    borderBottom: "2px solid #f3f4f6",
-                    textTransform: "uppercase",
-                    letterSpacing: 0.5,
-                  }}
-                >
+                <p className="text-[11px] font-extrabold text-gray-900 mb-2.5 pb-2 border-b-2 border-gray-100 uppercase tracking-wide">
                   {col.heading}
                 </p>
-                <div
-                  style={{ display: "flex", flexDirection: "column", gap: 0 }}
-                >
+                <div className="flex flex-col">
                   {col.items.map((item) => (
                     <button
                       key={item}
@@ -268,28 +267,7 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
                         setCatFilter(openMenu);
                         setOpenMenu(null);
                       }}
-                      style={{
-                        textAlign: "left",
-                        background: "none",
-                        border: "none",
-                        padding: "6px 10px",
-                        fontSize: 13,
-                        color: "#6b7280",
-                        cursor: "pointer",
-                        borderRadius: 8,
-                        transition: "all .12s",
-                        lineHeight: 1.4,
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "#fff1f2";
-                        e.currentTarget.style.color = "#f43f5e";
-                        e.currentTarget.style.paddingLeft = "16px";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "none";
-                        e.currentTarget.style.color = "#6b7280";
-                        e.currentTarget.style.paddingLeft = "10px";
-                      }}
+                      className="text-left bg-transparent border-none py-1.5 px-2.5 text-[13px] text-gray-500 cursor-pointer rounded-lg transition-all duration-150 leading-relaxed hover:bg-rose-50 hover:text-rose-500 hover:pl-4"
                     >
                       {item}
                     </button>
@@ -300,17 +278,8 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
           </div>
 
           {/* Footer bar */}
-          <div
-            style={{
-              background: "#fafafa",
-              borderTop: "1px solid #f3f4f6",
-              padding: "10px 28px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <span style={{ fontSize: 12, color: "#9ca3af" }}>
+          <div className="bg-gray-50/80 border-t border-gray-100 py-2.5 px-7 flex items-center justify-between">
+            <span className="text-xs text-gray-400">
               🔥 {MEGA_MENUS[openMenu].title}
             </span>
             <button
@@ -318,14 +287,7 @@ export default function CategoryNavBar({ catFilter, setCatFilter, setSearch }) {
                 setCatFilter(openMenu);
                 setOpenMenu(null);
               }}
-              style={{
-                fontSize: 12,
-                fontWeight: 800,
-                color: "#f43f5e",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
+              className="text-xs font-extrabold text-rose-500 bg-transparent border-none cursor-pointer hover:text-rose-600 transition-colors"
             >
               All products →
             </button>

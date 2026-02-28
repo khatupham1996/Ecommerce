@@ -11,12 +11,7 @@ export default function AppLayout() {
     useAppContext();
 
   return (
-    <div
-      className="min-h-screen bg-slate-50"
-      style={{
-        fontFamily: "'Inter',system-ui,sans-serif",
-      }}
-    >
+    <div className="min-h-screen bg-slate-50 font-sans">
       {/* Top announcement */}
       <div className="bg-black text-gray-400 text-xs text-center px-4 py-2">
         🚀 Free shipping on orders over 99$ · 🔐 US products · 🇺🇸→🇻🇳 Deliver

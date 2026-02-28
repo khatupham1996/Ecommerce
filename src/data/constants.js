@@ -630,3 +630,9 @@ export const MEGA_MENUS = {
     ],
   },
 };
+export const PAYMENTS = [
+  ["stripe", "💳 Stripe / Visa", "International Card"],
+  ["paypal", "🅿️ PayPal", "PayPal Wallet"],
+  ["momo", "🟣 MoMo", "MoMo Wallet"],
+  ["cod", "💵 COD", "Cash"],
+];
