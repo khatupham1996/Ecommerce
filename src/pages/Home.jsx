@@ -44,14 +44,13 @@ export default function Home() {
 
       {/* Main content */}
       <div className="max-w-7xl mx-auto py-7 px-5">
-        <div className="flex gap-6">
+        <div className="flex flex-col gap-2">
           <FilterSidebar
             sortBy={sortBy}
             setSortBy={setSortBy}
             priceRange={priceRange}
             setPriceRange={setPriceRange}
           />
-
           {/* Product Grid */}
           <div className="flex-1">
             <div className="flex justify-between text-center mb-5">

@@ -636,3 +636,16 @@ export const PAYMENTS = [
   ["momo", "🟣 MoMo", "MoMo Wallet"],
   ["cod", "💵 COD", "Cash"],
 ];
+export const SORT_OPTIONS = [
+  ["default", "default"],
+  ["price_asc", "price_asc"],
+  ["price_desc", "price_desc"],
+  ["rating", "Rating"],
+];
+export const PRICE_ARRANGMENT = [
+  [0, 99999999, "All"],
+  [0, 500000, "Under 500k"],
+  [500000, 2000000, "500k–2tr"],
+  [2000000, 5000000, "2tr–5tr"],
+  [5000000, 99999999, "Above 5tr"],
+];

@@ -34,10 +34,7 @@ export default function Footer() {
           </p>
         </div>
         {[
-          [
-            "Menu",
-            ["Cosmetics", "Foods", "Fashion", "Electronics", "Health"],
-          ],
+          ["Menu", ["Cosmetics", "Foods", "Fashion", "Electronics", "Health"]],
           ["Support", ["FAQ", "Return/Exchange", "Order Track", "Contact"]],
           ["About us", ["Introduction", "Blog", "Partner"]],
         ].map(([t, ls]) => (
