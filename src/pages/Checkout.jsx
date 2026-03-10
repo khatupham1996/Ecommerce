@@ -90,7 +90,7 @@ export default function Checkout() {
         </button>
         <h1 className="text-xl font-extrabold text-slate-900">Check Out</h1>
       </div>
-      <div className="max-w-4xl mx-auto py-7 px-4 grid grid-cols-[1fr_340px] gap-6">
+      <div className="max-w-4xl mx-auto py-7 px-4 grid lg:grid-cols-[1fr_340px] gap-6">
         <div className="flex flex-col gap-5">
           {/* Shipping */}
           <div className="bg-white rounded-[20px] p-6 shadow-[0 1px 8px rgba(0,0,0,.06)]">

@@ -14,6 +14,7 @@ export default function Admin() {
   const [tab, setTab] = useState("dashboard");
   const [products, setProducts] = useState(PRODUCTS);
   const [orders, setOrders] = useState(ORDERS_MOCK);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const revenue = orders
     .filter((o) => o.status === "completed")
@@ -30,16 +31,46 @@ export default function Admin() {
     },
     { label: "Customers", value: 156, icon: "👥", bg: "bg-amber-100" },
   ];
-
+  const handleTabChange = (newTab) => {
+    setTab(newTab);
+    setSidebarOpen(false);
+  };
   return (
     <div className="flex min-h-screen font-[system-ui,sans-serif] bg-gray-50">
       {/* ─── Sidebar ─── */}
-      <AdminSidebar tab={tab} setTab={setTab} />
+      <div
+        className={`lg:hidden fixed inset-0  bg-black/40 z-40 transition-opacity duration-300 ${sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+      <div
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-60 transform transition-transform duration-300 ease-[cubic-bezier(.4,0,.2,1)] ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
+      >
+        <AdminSidebar tab={tab} setTab={handleTabChange} />
+      </div>
 
       {/* ─── Content ─── */}
       <div className="flex-1 overflow-y-auto flex flex-col">
         {/* Top bar */}
         <div className="bg-white border-b border-gray-100 py-3.5 px-7 flex items-center justify-between sticky top-0 z-10">
+          {/* Mobile menu toggle */}
+
+          <button
+            className="lg:hidden border-none bg-transparent cursor-pointer text-gray-700 p-1 "
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d="M3 6h18M3 12h18M3 18h18" />
+            </svg>
+          </button>
+
           <h1 className="font-extrabold text-lg text-gray-900">
             {NAV.find((n) => n[0] === tab)?.[2]}
           </h1>

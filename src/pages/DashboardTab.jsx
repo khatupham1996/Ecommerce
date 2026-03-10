@@ -25,15 +25,19 @@ export default function DashboardTab({ stats, orders, products }) {
             >
               {s.icon}
             </div>
-            <p className="text-[22px] font-black text-gray-900">{s.value}</p>
-            <p className="text-xs text-gray-400 mt-0.5">{s.label}</p>
+            <p className="text-[22px] text-center font-black text-gray-900">
+              {s.value}
+            </p>
+            <p className="text-xs text-center text-gray-400 mt-0.5">
+              {s.label}
+            </p>
           </div>
         ))}
       </div>
 
       {/* Revenue chart */}
       <div className="bg-white rounded-2xl p-6 shadow-sm">
-        <h3 className="font-extrabold mb-5 sm:text-center md:text-left">
+        <h3 className="font-extrabold mb-5 text-center md:text-left">
           Revenue 6 months
         </h3>
         <div className="flex items-end gap-3 h-40">
@@ -54,22 +58,28 @@ export default function DashboardTab({ stats, orders, products }) {
       {/* Recent orders + Trending */}
       <div className="grid sm:text-center md:text-left lg:grid-cols-2 gap-5">
         <div className="bg-white rounded-2xl p-5 shadow-sm">
-          <h3 className="font-extrabold mb-3">Recently Orders</h3>
+          <h3 className="font-extrabold text-center md:text-left mb-3">
+            Recently Orders
+          </h3>
           {orders.slice(0, 4).map((o) => (
             <div
               key={o.id}
               className="grid  md:grid-cols-[1fr_1fr_auto] items-center gap-4 py-2.5 border-b border-gray-50"
             >
               <div className="min-w-0">
-                <p className="text-xs font-bold font-mono">{o.id}</p>
-                <p className="text-xs text-gray-400">{o.user}</p>
+                <p className="text-xs text-center md:text-left font-bold font-mono">
+                  {o.id}
+                </p>
+                <p className="text-xs text-center md:text-left text-gray-400">
+                  {o.user}
+                </p>
               </div>
               <span
-                className={`py-0.5 px-2.5 rounded-full w-36 mx-auto md:mx-0 text-xs font-semibold ${STATUS_BG[o.status]}`}
+                className={`py-0.5 px-2.5 rounded-full w-36 mx-auto md:mx-0 text-xs text-center md:text-left font-semibold ${STATUS_BG[o.status]}`}
               >
                 {STATUS[o.status].label}
               </span>
-              <p className="text-xs font-bold w-28 mx-auto md:mx-0 md:text-right">
+              <p className="text-xs font-bold w-28 mx-auto text-center  md:text-right ">
                 {fmt(o.total)}
               </p>
             </div>

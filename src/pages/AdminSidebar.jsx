@@ -4,7 +4,7 @@ import { NAV } from "../data/constants";
 function AdminSidebar({ tab, setTab }) {
   const navigate = useNavigate();
   return (
-    <div className="w-60 bg-gray-950 text-white flex flex-col shrink-0">
+    <div className="w-60 bg-gray-950 text-white flex flex-col shrink-0 h-full">
       <div className="py-5 px-6 border-b border-gray-800">
         <p className="text-[10px] text-gray-500 uppercase tracking-[2px] mb-1">
           Admin Panel

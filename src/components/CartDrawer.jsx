@@ -16,63 +16,22 @@ export default function CartDrawer({
     <>
       {open && (
         <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
           onClick={onClose}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,.4)",
-            backdropFilter: "blur(3px)",
-            zIndex: 40,
-          }}
         />
       )}
       <div
-        style={{
-          position: "fixed",
-          top: 0,
-          right: 0,
-          height: "100%",
-          width: "100%",
-          maxWidth: 420,
-          background: "#fff",
-          zIndex: 50,
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "-20px 0 60px rgba(0,0,0,.15)",
-          transition: "transform .35s cubic-bezier(.4,0,.2,1)",
-          transform: open ? "translateX(0)" : "translateX(100%)",
-        }}
+        className={`fixed top-0 right-0 h-full w-full max-w-[420px] bg-white z-50 flex flex-col shadow-[-20px 0 60px rgba(0,0,0,.15)] transition-transform duration-300 ease-[cubic-bezier(.4,0,.2,1)] ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "20px 24px",
-            borderBottom: "1px solid #f3f4f6",
-          }}
-        >
+        <div className="flex items-center justify-between py-5 px-6 border-b-[1px] border-solid border-blue-50">
           <div>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: "#111827" }}>
-              Cart
-            </h2>
-            <p style={{ fontSize: 12, color: "#9ca3af" }}>
-              {cart.length} Items
-            </p>
+            <h2 className="text-xl font-extrabold  text-slate-900">Cart</h2>
+            <p className="text-xs text-gray-400 ">{cart.length} Items</p>
           </div>
           <button
+            className="w-8 h-8 rounded-full bg-slate-100 border-none cursor-pointer text-[14px] text-gray-500"
             onClick={onClose}
-            style={{
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              background: "#f3f4f6",
-              border: "none",
-              cursor: "pointer",
-              fontSize: 14,
-              color: "#6b7280",
-            }}
           >
             ✕
           </button>
@@ -80,181 +39,68 @@ export default function CartDrawer({
 
         {/* Free shipping progress */}
         {sub < 3000000 && sub > 0 && (
-          <div
-            style={{
-              margin: "12px 20px 0",
-              background: "#fffbeb",
-              border: "1px solid #fde68a",
-              borderRadius: 14,
-              padding: "10px 14px",
-            }}
-          >
-            <p
-              style={{
-                fontSize: 12,
-                color: "#92400e",
-                fontWeight: 600,
-                marginBottom: 6,
-              }}
-            >
-              Thêm {fmt(3000000 - sub)} để miễn phí ship 🚀
+          <div className="mt-3 mx-5 mb-0 border-solid border-[1px] border-yellow-300 bg-yellow-50 rounded-xl py-3 px-4">
+            <p className="text-xs text-amber-500 font-semibold mb-[6px]">
+              Add more {fmt(3000000 - sub)} for free delivery 🚀
             </p>
-            <div
-              style={{ background: "#fde68a", borderRadius: 999, height: 6 }}
-            >
+            <div className="bg-yellow-200 rounded-full h-2">
               <div
-                style={{
-                  background: "#f59e0b",
-                  height: "100%",
-                  borderRadius: 999,
-                  width: `${(sub / 3000000) * 100}%`,
-                  transition: "width .3s",
-                }}
+                className="bg-amber-500 h-full rounded-full transition-[width] duration-300"
+                style={{ width: `${(sub / 3000000) * 100}%` }}
               />
             </div>
           </div>
         )}
 
         {/* Cart items */}
-        <div
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            padding: "16px 20px",
-            display: "flex",
-            flexDirection: "column",
-            gap: 12,
-          }}
-        >
+        <div className="flex-1 overflow-y-auto py-4 px-5 flex flex-col gap-3">
           {cart.length === 0 ? (
-            <div
-              style={{ textAlign: "center", paddingTop: 80, color: "#9ca3af" }}
-            >
-              <div style={{ fontSize: 52, marginBottom: 12 }}>🛒</div>
-              <p style={{ fontWeight: 600 }}>Giỏ hàng trống</p>
+            <div className="text-center pt-20 text-gray-400">
+              <div className="text-[52px] mb-3">🛒</div>
+              <p className="font-semibold">Empty Cart</p>
             </div>
           ) : (
             cart.map((item) => (
               <div
                 key={item.id}
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  background: "#f9fafb",
-                  borderRadius: 18,
-                  padding: 12,
-                }}
+                className="flex items-center gap-3 bg-slate-50 rounded-2xl p-3"
               >
                 <img
+                  className="w-16 h-16 rounded-xl object-cover flex-shrink-0"
                   src={item.image}
                   alt={item.name}
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 12,
-                    objectFit: "cover",
-                    flexShrink: 0,
-                  }}
                 />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      color: "#1f2937",
-                      overflow: "hidden",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-slate-900 line-clamp-1">
                     {item.name}
                   </p>
-                  <p
-                    style={{
-                      color: "#f43f5e",
-                      fontWeight: 800,
-                      fontSize: 13,
-                      marginTop: 2,
-                    }}
-                  >
+                  <p className="text-rose-500 font-extrabold mt-[2px]">
                     {fmt(item.price)}
                   </p>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      marginTop: 8,
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 2,
-                        background: "#fff",
-                        borderRadius: 10,
-                        padding: 2,
-                        boxShadow: "0 1px 4px rgba(0,0,0,.08)",
-                      }}
-                    >
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-1 bg-white rounded-lg p-1 shadow-[0 1px 4px rgba(0,0,0,.08)]">
                       <button
+                        className="w-6 h-6 border-none cursor-pointer font-bold"
                         onClick={() => onQty(item.id, item.qty - 1)}
-                        style={{
-                          width: 24,
-                          height: 24,
-                          border: "none",
-                          background: "none",
-                          cursor: "pointer",
-                          fontWeight: 700,
-                        }}
                       >
                         −
                       </button>
-                      <span
-                        style={{
-                          width: 22,
-                          textAlign: "center",
-                          fontWeight: 700,
-                          fontSize: 13,
-                        }}
-                      >
+                      <span className="w-5 text-center font-bold text-xs">
                         {item.qty}
                       </span>
                       <button
+                        className="w-6 h-6 border-none bg-none cursor-pointer font-bold"
                         onClick={() => onQty(item.id, item.qty + 1)}
-                        style={{
-                          width: 24,
-                          height: 24,
-                          border: "none",
-                          background: "none",
-                          cursor: "pointer",
-                          fontWeight: 700,
-                        }}
                       >
                         +
                       </button>
                     </div>
-                    <span
-                      style={{
-                        fontSize: 12,
-                        color: "#6b7280",
-                        marginLeft: "auto",
-                      }}
-                    >
+                    <span className="text-xs text-gray-500 ml-auto">
                       {fmt(item.price * item.qty)}
                     </span>
                     <button
+                      className="border-none bg-none cursor-default text-rose-300 text-xs font-bold "
                       onClick={() => onRemove(item.id)}
-                      style={{
-                        border: "none",
-                        background: "none",
-                        cursor: "pointer",
-                        color: "#fca5a5",
-                        fontSize: 12,
-                        fontWeight: 700,
-                      }}
                     >
                       ✕
                     </button>
@@ -267,73 +113,32 @@ export default function CartDrawer({
 
         {/* Footer totals */}
         {cart.length > 0 && (
-          <div
-            style={{
-              padding: "16px 20px 24px",
-              borderTop: "1px solid #f3f4f6",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 6,
-                marginBottom: 16,
-              }}
-            >
+          <div className="pt-4 px-5 pb-6 border-t-[1px] border-solid border-slate-100">
+            <div className="flex flex-col gap-2 mb-4">
               {[
                 ["Price", fmt(sub)],
                 ["Shipping", ship === 0 ? "Free 🎉" : fmt(ship)],
               ].map(([l, v]) => (
                 <div
                   key={l}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: 13,
-                    color: "#6b7280",
-                  }}
+                  className="flex justify-between text-xs text-gray-500"
                 >
                   <span>{l}</span>
                   <span
-                    style={{
-                      color: v.includes("Miễn") ? "#10b981" : undefined,
-                      fontWeight: v.includes("Miễn") ? 600 : 400,
-                    }}
+                    className={`${v.includes("Miễn") ? "#10b981" : "undefined"} ${v.includes("Miễn") ? 600 : 400}`}
                   >
                     {v}
                   </span>
                 </div>
               ))}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontSize: 16,
-                  fontWeight: 800,
-                  paddingTop: 8,
-                  borderTop: "1px solid #f3f4f6",
-                }}
-              >
+              <div className="flex justify-between text-[16px] font-extrabold pt-2 border-solid border-t-[1px] border-slate-100">
                 <span>Total</span>
-                <span style={{ color: "#f43f5e", fontSize: 18 }}>
-                  {fmt(total)}
-                </span>
+                <span className="text-rose-500 text-xl">{fmt(total)}</span>
               </div>
             </div>
             <button
               onClick={onCheckout}
-              style={{
-                width: "100%",
-                background: "#f43f5e",
-                color: "#fff",
-                border: "none",
-                borderRadius: 18,
-                padding: "15px 0",
-                fontWeight: 800,
-                fontSize: 15,
-                cursor: "pointer",
-              }}
+              className="w-full bg-rose-500 text-white border-none rounded-2xl py-4 px-0 font-extrabold text-[15px] cursor-pointer"
             >
               Check Out →
             </button>
