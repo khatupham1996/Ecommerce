@@ -2,11 +2,13 @@ import { useState } from "react";
 import Stars from "./Stars";
 import { CATEGORIES, BADGE_CLS } from "../data/constants.js";
 import { fmt, disc } from "../utils/helpers.js";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ p, onAdd, onView }) {
   const [hover, setHover] = useState(false);
   const [added, setAdded] = useState(false);
   const pct = disc(p.price, p.originalPrice);
+  const navigate = useNavigate();
 
   const handleAdd = (e) => {
     e.stopPropagation();
@@ -14,10 +16,13 @@ export default function ProductCard({ p, onAdd, onView }) {
     setAdded(true);
     setTimeout(() => setAdded(false), 1000);
   };
+  const handleView = () => {
+    navigate(`/product/${p.id}`);
+  };
 
   return (
     <div
-      onClick={() => onView(p)}
+      onClick={handleView}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className={`bg-white rounded-[20px] overflow-hidden border border-gray-100 cursor-pointer transition-all duration-[250ms] ${

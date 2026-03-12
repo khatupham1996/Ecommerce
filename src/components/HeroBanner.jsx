@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { PRODUCTS } from "../data/constants.js";
 
 export default function HeroBanner({ onViewProduct }) {
+  const navigate = useNavigate();
   return (
     <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-[60px] px-5">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -46,7 +48,7 @@ export default function HeroBanner({ onViewProduct }) {
           {PRODUCTS.slice(0, 4).map((p) => (
             <div
               key={p.id}
-              onClick={() => onViewProduct(p)}
+              onClick={() => navigate(`product/${p.id}`)}
               className="rounded-2xl overflow-hidden aspect-square cursor-pointer opacity-85 group"
             >
               <img

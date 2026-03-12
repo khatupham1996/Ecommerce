@@ -7,6 +7,7 @@ import Login from "./pages/Login.jsx";
 import Profile from "./pages/Profile.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Admin from "./pages/Admin.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             }
           >
             <Route index element={<Home />} />
+            <Route path="product/:id" element={<ProductDetail />} />
             <Route path="profile" element={<Profile />} />
             <Route path="checkout" element={<Checkout />} />
           </Route>
@@ -37,6 +39,5 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </AppProvider>
-    // <div className="bg-re">Hello</div>
   );
 }

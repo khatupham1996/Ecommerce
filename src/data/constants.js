@@ -649,3 +649,39 @@ export const PRICE_ARRANGMENT = [
   [2000000, 5000000, "2tr–5tr"],
   [5000000, 99999999, "Above 5tr"],
 ];
+export const INIT_REVIEWS = {
+  1: [
+    {
+      id: 1,
+      user: "Minh Anh",
+      rating: 5,
+      date: "2025-01-20",
+      text: "Kem dưỡng ẩm rất tốt, da mình mềm mịn hẳn sau 1 tuần sử dụng. Ship từ US về VN nhanh hơn mong đợi!",
+      helpful: 12,
+    },
+    {
+      id: 2,
+      user: "Thanh Hà",
+      rating: 4,
+      date: "2025-01-18",
+      text: "Sản phẩm chính hãng, packaging đẹp. Trừ 1 sao vì giao hàng hơi lâu.",
+      helpful: 5,
+    },
+  ],
+  2: [
+    {
+      id: 3,
+      user: "Đức Phong",
+      rating: 5,
+      date: "2025-01-22",
+      text: "Whey protein chất lượng cao, hòa tan tốt, vị chocolate ngon. Đã mua lần 3!",
+      helpful: 8,
+    },
+  ],
+};
+
+// export const PRODUCTDETAILS = [
+//   ["description", "📝 Description"],
+//   ["reviews", `⭐ Reviews (${reviews.length || totalReviews})`],
+//   ["shipping", "🚢 Shipping"],
+// ];
