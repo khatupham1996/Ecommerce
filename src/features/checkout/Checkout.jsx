@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../ui/AppContext.jsx";
-import { COUPONS_MOCK, PAYMENTS } from "../data/constants.js";
-import { fmt } from "../utils/helpers.js";
-import { useProvinces } from "../hooks/useProvinces.js";
+import { useAppContext } from "../../ui/AppContext.jsx";
+import { COUPONS_MOCK, PAYMENTS } from "../../data/constants.js";
+import { fmt } from "../../utils/helpers.js";
+import { useProvinces } from "../../hooks/useProvinces.js";
 
 export default function Checkout() {
   const navigate = useNavigate();

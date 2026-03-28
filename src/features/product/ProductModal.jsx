@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Stars from "./Stars";
-import { CATEGORIES, BADGE_CLS } from "../data/constants.js";
-import { fmt, disc } from "../utils/helpers.js";
+import { CATEGORIES, BADGE_CLS } from "../../data/constants.js";
+import { fmt, disc } from "../../utils/helpers.js";
+import Stars from "../../ui/Stars.jsx";
 
 export default function ProductModal({ p, onClose, onAdd }) {
   const [qty, setQty] = useState(1);

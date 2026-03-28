@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PRODUCTS } from "../data/constants.js";
 import { useAppContext } from "../ui/AppContext.jsx";
-import ProductCard from "../components/ProductCard.jsx";
-import ProductModal from "../components/ProductModal.jsx";
-import HeroBanner from "../components/HeroBanner.jsx";
-import FilterSidebar from "../components/FilterSidebar.jsx";
+import HeroBanner from "../ui/HeroBanner.jsx";
+import FilterSidebar from "../ui/FilterSidebar.jsx";
+import ProductCard from "../features/product/ProductCard.jsx";
+import ProductModal from "../features/product/ProductModal.jsx";
 
 export default function Home() {
   const navigate = useNavigate();

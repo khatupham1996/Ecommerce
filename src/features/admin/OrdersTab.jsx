@@ -1,5 +1,9 @@
-import { ORDER_TABLE_HEADERS, STATUS, STATUS_BG } from "../data/constants.js";
-import { fmt } from "../utils/helpers.js";
+import {
+  ORDER_TABLE_HEADERS,
+  STATUS,
+  STATUS_BG,
+} from "../../data/constants.js";
+import { fmt } from "../../utils/helpers.js";
 
 export default function OrdersTab({ orders, setOrders }) {
   return (

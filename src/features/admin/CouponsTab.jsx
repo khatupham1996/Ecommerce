@@ -1,5 +1,5 @@
-import { COUPONS_MOCK } from "../data/constants.js";
-import { fmt } from "../utils/helpers.js";
+import { COUPONS_MOCK } from "../../data/constants";
+import { fmt } from "../../utils/helpers";
 
 export default function CouponsTab() {
   return (

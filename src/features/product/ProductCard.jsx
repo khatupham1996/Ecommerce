@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Stars from "./Stars";
-import { CATEGORIES, BADGE_CLS } from "../data/constants.js";
-import { fmt, disc } from "../utils/helpers.js";
+import Stars from "../../ui/Stars.jsx";
+import { CATEGORIES, BADGE_CLS } from "../../data/constants.js";
+import { fmt, disc } from "../../utils/helpers.js";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ p, onAdd, onView }) {

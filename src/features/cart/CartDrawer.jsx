@@ -1,4 +1,4 @@
-import { fmt } from "../utils/helpers.js";
+import { fmt } from "../../utils/helpers.js";
 
 export default function CartDrawer({
   open,

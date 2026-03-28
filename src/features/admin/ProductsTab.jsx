@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Stars from "../components/Stars.jsx";
-import { CATEGORIES } from "../data/constants.js";
-import { fmt } from "../utils/helpers.js";
+import Stars from "../../ui/Stars.jsx";
+import { CATEGORIES } from "../../data/constants.js";
+import { fmt } from "../../utils/helpers.js";
 
 const STOCK_STYLE = (stock) =>
   stock > 20

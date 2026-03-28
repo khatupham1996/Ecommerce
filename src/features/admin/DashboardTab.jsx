@@ -1,6 +1,6 @@
-import Stars from "../components/Stars.jsx";
-import { STATUS } from "../data/constants.js";
-import { fmt } from "../utils/helpers.js";
+import { STATUS } from "../../data/constants.js";
+import Stars from "../../ui/Stars.jsx";
+import { fmt } from "../../utils/helpers.js";
 
 const STATUS_BG = {
   pending: "bg-yellow-100 text-yellow-700",

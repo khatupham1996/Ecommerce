@@ -685,3 +685,19 @@ export const INIT_REVIEWS = {
 //   ["reviews", `⭐ Reviews (${reviews.length || totalReviews})`],
 //   ["shipping", "🚢 Shipping"],
 // ];
+export const SHIPPING = [
+  [
+    "🚢",
+    "Standard Delivery (US → VN)",
+    "7–14 business days",
+    "Free for orders over 3,000,000đ",
+  ],
+  ["✈️", "Express Delivery", "3–5 business days", "Additional 500,000đ"],
+  ["↩️", "Return & Exchange", "Within 30 days", "Free return if defective"],
+  [
+    "📦",
+    "Packaging",
+    "Double-boxed protection",
+    "Bubble wrap for fragile items",
+  ],
+];

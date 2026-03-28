@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import CategoryNavBar from "../components/CategoryNavBar";
+import CategoryNavBar from "../ui/CategoryNavBar";
 import { useAppContext } from "./AppContext";
 import { useState } from "react";
 

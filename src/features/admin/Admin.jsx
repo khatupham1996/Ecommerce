@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
-import { PRODUCTS, ORDERS_MOCK, NAV } from "../data/constants.js";
-import { fmt } from "../utils/helpers.js";
+import { PRODUCTS, ORDERS_MOCK, NAV } from "../../data/constants.js";
+import { fmt } from "../../utils/helpers.js";
 import AdminSidebar from "./AdminSidebar.jsx";
 import DashboardTab from "./DashboardTab.jsx";
 import ProductsTab from "./ProductsTab.jsx";

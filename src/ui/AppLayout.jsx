@@ -1,8 +1,8 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppContext } from "./AppContext.jsx";
 // import CategoryNavBar from "../components/CategoryNavBar.jsx";
-import CartDrawer from "../components/CartDrawer.jsx";
-import Footer from "../components/Footer.jsx";
+import CartDrawer from "../features/cart/CartDrawer.jsx";
+import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 
 export default function AppLayout() {
